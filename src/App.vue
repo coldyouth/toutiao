@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>toutou</h1>
+    <!-- 路由占位符 -->
     <router-view />
   </div>
 </template>
@@ -10,4 +10,9 @@ export default {
 }
 </script>
 <style lang="less">
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: pink;
+}
 </style>
