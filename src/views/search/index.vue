@@ -71,9 +71,15 @@ export default {
     }
   },
   watch: {
+    // 历史记录持久化
     searchHistories(val) {
       setItem('TOUTIAO_SEARCH_HISTORIES', val)
     }
+  },
+  mounted() {
+    // 自动聚焦
+    const ipt = document.querySelector('input[type=search]')
+    ipt && ipt.focus()
   }
 }
 </script>

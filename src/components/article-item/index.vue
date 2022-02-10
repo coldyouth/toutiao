@@ -29,7 +29,7 @@
             <span>{{article.pubdate | relativeTime}}</span>
           </div>
           <!-- 关闭按钮,注意防止事件冒泡 -->
-          <van-icon name="cross" @click.stop="isActionShow=true" />
+          <van-icon v-if="closable" name="cross" @click.stop="isActionShow=true" />
         </div>
       </div>
 
@@ -87,6 +87,10 @@ export default {
     article: {
       type: Object,
       required: true
+    },
+    closable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

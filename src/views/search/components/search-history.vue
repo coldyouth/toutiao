@@ -4,7 +4,7 @@
       <div v-if="isDeleteShow">
         <span @click="$emit('clear-search-histories')">全部删除</span>
         &nbsp;&nbsp;
-        <span>完成</span>
+        <span @click="isDeleteShow = false">完成</span>
       </div>
 
       <van-icon v-else name="delete-o" @click="isDeleteShow = true" />

@@ -105,7 +105,7 @@ export default {
         this.$toast('更新用户的频道失败')
       }
     },
-    // 添加频道
+    // 添加频道到用户频道
     async onAddChannel(channel) {
       this.myChannels.push(channel)
       // 数据持久化处理
@@ -122,7 +122,10 @@ export default {
       // 编辑状态，删除频道
       if (this.isEdit) {
         // 不能删除固定保留的频道
-        if (this.fixedChannel.includes(channel.id)) {
+        if (
+          this.fixedChannel.includes(channel.id) ||
+          this.myChannels.length === 2
+        ) {
           return
         }
         // 如果删的是激活前面的频道，则active要减一

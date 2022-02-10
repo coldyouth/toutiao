@@ -8,15 +8,25 @@
       :error.sync="error"
       error-text="请求失败，点击重新加载"
     >
-      <van-cell v-for="(article,index) in list" :key="index" :title="article.title" />
+      <!-- <van-cell v-for="(article,index) in list" :key="index" :title="article.title" /> -->
+      <article-item
+        v-for="(article,index) in list"
+        :key="index"
+        :article="article"
+        :closable="false"
+      ></article-item>
     </van-list>
   </div>
 </template>
 
 <script>
 import { getSearchResult } from '@/api/search.js'
+import ArticleItem from '@/components/article-item'
 export default {
   name: 'SearchResult',
+  components: {
+    ArticleItem
+  },
   props: {
     // 搜索关键词
     searchText: {
@@ -36,6 +46,7 @@ export default {
     }
   },
   methods: {
+    // 加载搜索结果
     async onLoad() {
       try {
         // 异步更新数据
