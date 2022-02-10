@@ -9,6 +9,7 @@
       maxlength="50"
       placeholder="请输入评论"
       show-word-limit
+      ref="iptCmtRef"
     />
     <van-button class="post-btn" @click="onPost" :disable="!message.length">发布</van-button>
   </div>
@@ -53,6 +54,10 @@ export default {
         this.$toast.fail('发表新评论失败，请重试')
       }
     }
+  },
+  mounted() {
+    // 渲染了组件后自动聚焦
+    this.$refs.iptCmtRef.focus()
   }
 }
 </script>

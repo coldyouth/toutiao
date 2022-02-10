@@ -68,11 +68,15 @@
             type="default"
             round
             size="small"
-            @click="isPostShow=true"
+            @click="isPostShow = true"
           >写评论</van-button>
-          <!-- 评论图标 -->
-
-          <van-icon name="comment-o" :badge="totalCommentCount" color="#777" />
+          <!-- 评论图标-->
+          <van-icon
+            name="comment-o"
+            :badge="totalCommentCount"
+            color="#777"
+            @click="scrollToCmtList"
+          />
           <!-- 收藏 -->
           <collect-article
             class="btn-item"
@@ -81,12 +85,13 @@
           ></collect-article>
           <!-- 点赞 -->
           <like-article class="btn-item" v-model="article.attitude" :article-id="article.art_id"></like-article>
+          <!-- 转发 -->
           <van-icon name="share" color="#777777"></van-icon>
         </div>
         <!-- /底部区域 -->
         <!-- 写评论弹出层 -->
         <van-popup v-model="isPostShow" position="bottom">
-          <comment-post :target="article.art_id" @post-success="onPostSuccess"></comment-post>
+          <comment-post :target="article.art_id" @post-success="onPostSuccess" ref="iptCmtRef"></comment-post>
         </van-popup>
       </div>
       <!-- /加载完成-文章详情 -->
@@ -112,12 +117,14 @@
 <script>
 import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
+import { animate } from 'popmotion'
 
 import FollowUser from '@/components/follow-user/index.vue'
 import CollectArticle from '@/components/collect-article/index.vue'
 import LikeArticle from '@/components/like-article/index.vue'
 import CommentList from '@/components/comment-list/index.vue'
 import CommentPost from '@/components/comment-post/index.vue'
+
 export default {
   name: 'ArticleIndex',
   components: {
@@ -210,6 +217,20 @@ export default {
       this.isPostShow = false
       // 将新评论加到列表
       this.commentList.unshift(data.new_obj)
+    },
+    // 滚动到评论的列表区域
+    scrollToCmtList() {
+      // 1. 当前滚动条的位置
+      const now = window.scrollY
+      // 2. 目标位置（文章信息区域的高度）
+      const dist = document.querySelector('.article-container').offsetHeight
+
+      // 3. 实现滚动动画
+      animate({
+        from: now, // 当前的位置
+        to: dist, // 目标位置
+        onUpdate: (latest) => window.scrollTo(0, latest)
+      })
     }
   }
 }
