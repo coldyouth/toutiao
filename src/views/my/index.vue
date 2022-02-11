@@ -55,7 +55,7 @@
     <!-- /宫格导航 -->
 
     <van-cell title="消息通知" is-link />
-    <van-cell class="mb-9" title="小智同学" is-link />
+    <van-cell class="mb-9" title="小思同学" is-link to="/chat" />
     <van-cell v-if="user" class="logout-cell" clickable title="退出登录" @click="onLogout" />
   </div>
 </template>
@@ -96,6 +96,8 @@ export default {
         const { data } = await getUserInfo()
         console.log(data)
         this.userInfo = data.data
+        // 将用户基本信息保存到VUEX
+        this.$store.commit('updateUserInfo', data.data)
       } catch (err) {
         this.$toast('获取用户信息失败')
       }

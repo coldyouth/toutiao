@@ -18,7 +18,9 @@ const routes = [
   },
   { path: '/search', name: 'search', component: () => import('@/views/search') },
   { path: '/article/:articleId', name: 'article', props: true, component: () => import('@/views/article') },
-  { path: '/user/profile', name: 'user-profile', component: () => import('@/views/user-profile') }
+  { path: '/user/profile', name: 'user-profile', component: () => import('@/views/user-profile') },
+  // 小思聊天的路由规则
+  { path: '/chat', name: 'chat', component: () => import('@/views/chat') }
 ]
 
 const router = new VueRouter({

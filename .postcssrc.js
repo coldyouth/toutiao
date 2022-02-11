@@ -41,7 +41,7 @@ module.exports = {
       propList: ['*'],
 
       // 不想px转rem的文件
-      exclude: 'github-markdown'
+      exclude: /github-markdown|chat/
     }
   }
 }
