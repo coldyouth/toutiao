@@ -13,7 +13,14 @@
       >搜索</van-button>
     </van-nav-bar>
     <!-- 频道列表 -->
-    <van-tabs class="channel-tabs" v-model="active" animated swipeable>
+    <van-tabs
+      class="channel-tabs"
+      v-model="active"
+      animated
+      swipeable
+      :before-change="beforeTabsChange"
+      @change="onTabsChange"
+    >
       <van-tab :key="channel.id" v-for="channel in channels" :title="channel.name">
         <!-- 文章列表 -->
         <article-list :channel="channel" />
@@ -50,6 +57,9 @@ import { getUserChannels } from '@/api/user.js'
 import { getItem } from '@/utils/storage'
 import ArticleList from './components/article-list.vue'
 import ChannelEdit from './components/channel-edit.vue'
+
+// “频道名称”和“滚动条位置”之间的对应关系，格式 { '推荐': 211, 'html': 30, '开发者资讯': 890 }
+const nameToTop = {}
 
 export default {
   name: 'HomeIndex',
@@ -100,10 +110,35 @@ export default {
     onUpdateActive(index, isChannelEditShow = true) {
       this.active = index
       this.isChannelEditShow = isChannelEditShow
+    },
+    // tabs 发生切换之前，触发此方法
+    beforeTabsChange() {
+      // 把当前"频道名称"对应的"滚动条位置"记录到 nameToTop 对象中
+      const name = this.channels[this.active].name
+      nameToTop[name] = window.scrollY
+      console.log('切换之前', name, nameToTop[name])
+      // return true 表示允许进行标签页的切换
+      return true
+    },
+    // 当 tabs 切换完毕之后，触发此方法
+    onTabsChange() {
+      // 等 DOM 更新完毕之后，根据记录的"滚动条位置"，调用 window.scrollTo() 方法进行滚动
+      this.$nextTick(() => {
+        const name = this.channels[this.active].name
+        window.scrollTo(0, nameToTop[name] || 0)
+        console.log('切换之后', name, nameToTop[name])
+      })
     }
   },
   computed: {
     ...mapState(['user'])
+  },
+  // 导航离开该组件的对应路由时调用
+  // 可以访问组件实例 `this`
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    // console.log('列表位置是', from.meta.top)
+    next()
   }
 }
 </script>

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <!-- 路由占位符 -->
-    <router-view />
+    <keep-alive>
+      <!-- 路由占位符 -->
+      <router-view />
+    </keep-alive>
   </div>
 </template>
 <script>

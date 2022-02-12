@@ -22,6 +22,7 @@ export default new Vuex.Store({
     cleanState(state) {
       state.user = ''
       removeItem(TOKEN_KEY)
+      state.userInfo = {}
     },
     // 保存用户基本信息的方法
     updateUserInfo(state, data) {

@@ -73,6 +73,17 @@ export default {
         this.loading = false
       }
     }
+  },
+  watch: {
+    searchText() {
+      // 1. 重置关键数据
+      this.list = []
+      this.loading = false
+      this.finished = false
+      this.page = 1
+      // 2. 请求数据
+      this.onLoad()
+    }
   }
 }
 </script>

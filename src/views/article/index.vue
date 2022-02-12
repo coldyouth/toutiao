@@ -124,6 +124,7 @@ import CollectArticle from '@/components/collect-article/index.vue'
 import LikeArticle from '@/components/like-article/index.vue'
 import CommentList from '@/components/comment-list/index.vue'
 import CommentPost from '@/components/comment-post/index.vue'
+import hljs from 'highlight.js'
 
 export default {
   name: 'ArticleIndex',
@@ -158,6 +159,13 @@ export default {
   },
   created() {
     this.loadArticle()
+  },
+  updated() {
+    // 1. 当组件的 DOM 更新完毕之后,判断是否有文章的内容
+    if (this.article) {
+      // 对文章的内容进行高亮处理
+      hljs.highlightAll()
+    }
   },
   methods: {
     // 获取文章的详情
@@ -232,6 +240,22 @@ export default {
         onUpdate: (latest) => window.scrollTo(0, latest)
       })
     }
+  },
+  watch: {
+    articleId() {
+      // 只要 id 值发生了变化，就清空旧的文章信息
+      this.article = null
+      // 并重新获取文章的详情数据
+      this.loadArticle()
+    }
+  },
+  // 用来记录当前组件在纵向上滚动的距离：
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    console.log('当前组件的位置是', window.scrollY)
+    setTimeout(() => {
+      next()
+    }, 0)
   }
 }
 </script>

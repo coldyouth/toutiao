@@ -22,7 +22,7 @@
 
     <!-- 对话区域 -->
     <div class="reply-container van-hairline--top">
-      <van-field v-model.trim="word" placeholder="说点什么...">
+      <van-field v-model.trim="word" placeholder="说点什么..." @keyup.enter="send">
         <template #button>
           <span @click="send" style="font-size:12px;color:#999">提交</span>
         </template>

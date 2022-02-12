@@ -1,7 +1,10 @@
 <template>
   <div class="layout-container">
     <!-- 路由占位符 -->
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+
     <!-- 底部的导航栏 -->
     <van-tabbar class="layout-tabbar" route>
       <van-tabbar-item to="/">
@@ -30,8 +33,7 @@ export default {
   name: 'layout-container',
   data() {
     return {}
-  },
-  methods: {}
+  }
 }
 </script>
 

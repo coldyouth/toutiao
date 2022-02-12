@@ -85,6 +85,7 @@ export default {
         .then(() => {
           // on confirm
           this.$store.commit('setUser', null)
+          this.$store.commit('updateUserInfo', null)
         })
         .catch(() => {
           // on cancel
@@ -104,7 +105,13 @@ export default {
     }
   },
   created() {
-    // 用户登录了再获取信息
+    // 用户登录了再获取信息, // 把下面这一行注释掉，因为 activated 在组件首次加载时也会调用一次
+    // if (this.user) {
+    //   this.loadUserInfo()
+    // }
+  },
+  activated() {
+    // 只要组件被激活了，就重新初始化用户的信息
     if (this.user) {
       this.loadUserInfo()
     }
